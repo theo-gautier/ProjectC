@@ -40,12 +40,12 @@ char decaleCesar(char c, int index){
     int ascii = charToAscii(c);
 
     if(maj(c)){ //Si le caractère est une majuscule.
-        ascii + index > 90 ? ascii+= index - 26 : ascii += index;
+        ascii + index > 90 ? ascii+= index - 26 : ascii += index; //Condition ternaire en C.
         //Si on dépasse 90, on revient en arrière de 26 pour écrire la bonne lettre.
 
     }
 
-    else if(charToAscii(c) == 32){
+    else if(charToAscii(c) == 32){ //Caractère espace.
         return c;
     }
 
@@ -57,7 +57,7 @@ char decaleCesar(char c, int index){
 }
 
 char* decodeCesar(char* message, int index){
-    char* s = (char*) malloc(100);
+    char* s = (char*) malloc(100); //Obligation de mettre un cast.
 
     for(int i = 0; i < mylen(message); i++){
         *(s+i) = decaleCesar(*(message+i), index);
