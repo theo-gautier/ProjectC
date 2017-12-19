@@ -20,6 +20,7 @@ int mylen(char* message){
 }
 
 bool maj(char c){
+    //renvoie True si c'est une majuscule
     int value = charToAscii(c);
     if(value > 64 && value < 91){
         return true;
@@ -37,6 +38,7 @@ char decaleCesar(char c, int index){
      *  @return la valeur en lettre décalée de la lettre
      */
 
+    //Ajout d'un commentaire DE TESTTTT
     int ascii = charToAscii(c);
 
     if(maj(c)){ //Si le caractère est une majuscule.
