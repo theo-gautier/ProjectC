@@ -6,6 +6,6 @@
 //
 //
 
-bool rechercher_mot(std::string Str);
-int Find_Index_mot(std::string mot);
-int Find_Index(std::vector<std::string> phrase);
+bool rechercher_mot(const std::string Str);
+int Find_Index_mot(const std::string mot);
+int Find_Index(const std::vector<std::string> phrase);
