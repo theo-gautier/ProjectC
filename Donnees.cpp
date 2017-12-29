@@ -19,7 +19,7 @@ bool rechercher_mot(const std::string Str){
     // recherche linéaire en la longueur du dictionnaire et O( longueur_max_mot * n ) où n est la longueur du dico
     //On doit pouvoir optimiser le bordel. À moins de sacrifier fstream, impossible de copier tout le dico dans un vecteur sans faire au moins n opératoires (+ les sous jacentes à la copie)
     bool res = false;
-    std::ifstream fichier("/Users/lucagorini/Documents/Electifs/ProjectC/frenchssaccent.dic");
+    std::ifstream fichier("frenchssaccent.dic");
     // /!\ NE PAS SUPPRIMER /!\ "/Users/lucagorini/Documents/Electifs/ProjectC/frenchssaccent.dic"
     //je suis passé sur un .txt mais je vais essayer avec le point dic
     if (fichier){ //si le fichier a été bien chargé
