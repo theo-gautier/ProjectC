@@ -64,7 +64,15 @@ std::vector<std::string> liste_decodee(const std::string message){
     return l;
 }
 
-void printListDecodee(const std::vector<std::string> l){
+void printVectorString(const std::vector<std::string> l){ 
+    std::cout << "(" << std::endl;
+    for (int j = 0; j < 26; j++){
+        std::cout << l[j] << std::endl;
+    }
+    std::cout << ")" << std::endl;
+}
+
+void printVectorInt(const std::vector<int> l){
     std::cout << "(" << std::endl;
     for (int j = 0; j < 26; j++){
         std::cout << l[j] << std::endl;
