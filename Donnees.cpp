@@ -17,7 +17,7 @@
 bool rechercher_mot(const std::string Str){
     // recherche un mot dans le dictionnaire et renvoie true si celui-ci y est
     // recherche linéaire en la longueur du dictionnaire et O( longueur_max_mot * n ) où n est la longueur du dico
-    //On doit pouvoir optimiser le bordel. À moins de sacrifier fstream, impossible de copier tout le dico dans un vecteur sans faire au moins n opératoires (+ les sous jacentes à la copie)
+    //On doit pouvoir optimiser le bordel. À moins de sacrifier fstream, impossible de copier tout le dico dans un vecteur sans faire au moins n opératoires (+ les sous jacentes à la copie) voir idées cypher
     bool res = false;
     std::ifstream fichier("frenchssaccent.dic");
     // /!\ NE PAS SUPPRIMER /!\ "/Users/lucagorini/Documents/Electifs/ProjectC/frenchssaccent.dic"
@@ -47,27 +47,46 @@ std::vector<int> Find_Index_mot(const std::string mot){
             liste_index.push_back(i);
         }
     }
-    return liste_index; //on suppose que cette liste n'est jamais vide
+    return liste_index; //on suppose que cette liste n'est jamais vide et en plus elle est triée
 }
 
-// Recherche d'un élément dans un vector /!\NAIVE  il existe surement des méthodes déjà implémentées/!\
+//Implémentation de la recherche dichotomique la construction du vector fait de celui-ci est un vector trié !
 
 bool Recherche_elt(const std::vector<int> tab, const int entier){
-    int len = tab.size();
-    for (int i = 0; i < len; i++){
-        if (entier == tab[i]){
+    int len = static_cast<int>(tab.size());  //MODIFICATION
+    //ça marche quand même sans le cast mais le if en dessous fait une conversion implicite je pense parce que le code marche même en déclarant len comme un unsigned long (tab.size() renvoie un unsigned long) qu'il compare avec un int.
+    int a = 0;
+    int b = len - 1;
+    int moitie = b/2;
+    int tmp = tab[moitie];
+    bool res = false;
+    if (entier == tab[0] | entier == tab[b]){ /*cas limites pas beau mais coûte quasi rien */
+        return true;
+    }
+    while (b - a != 1){
+        tmp = tab[moitie];
+        if (entier == tmp){
             return true;
+        }
+        else if (entier > tmp){
+            a = moitie;
+            moitie = (a+b)/2;
+        }
+        else{
+            b = moitie;
+            moitie = (a+b)/2;
         }
     }
     return false;
 }
+
+
 //Fonction de croisement de 2 vector d'entiers  /!\ TRÈS NAIVE /!\
 
 std::vector<int> Intersect_Vectors(const std::vector<int> vec1, const std::vector<int> vec2){
     std::vector<int> intersect; //vecteur intersection
 //quelle taille est donné de base à intersect ?
-    unsigned long len1 = vec1.size();
-    unsigned long len2 = vec2.size();
+    unsigned long len1 = vec1.size(); //à caster
     for (int i = 0 ; i < len1 ; i++){
         int tmp = vec1[i];
         if (Recherche_elt(vec2,tmp)){
@@ -87,7 +106,7 @@ int Find_Index(const std::vector<std::string> phrase){
         std::vector<int> index_tmp2 = Find_Index_mot(phrase[i]);
         index_tmp1 = Intersect_Vectors(index_tmp1, index_tmp2); //cela fonctionne -t-il
     }
-    return index_tmp1[0]; //il ne doit rester qu'un seul entier dans l'intersection générale (très forte probabilité)
+    return index_tmp1[0]; //il ne doit rester qu'un seul entier dans l'intersection générale (très forte probabilité) dans l'hypothèse où on entre la phrase sans faute !
 }
 
 

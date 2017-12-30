@@ -6,11 +6,11 @@
 #include <stdlib.h>
 
 int charToAscii(const char c){
-    return (int)c;
+    return static_cast<int>(c);
 }
 
 char asciiToChar(const int value){
-    return (char)value;
+    return static_cast<int>(value);
 }
 
 //inutile désormais on peut utiliser size
