@@ -13,14 +13,17 @@ int main()
     std::cin >> str;*/
 
 
-    std::string test = "bonjour je suis un cochon"; //renvoie -1 pour klac, 23 pour bonjour
-    std::string test_d = decodeCesar(test,3);
+    std::string test = "bonjour je suis un lot"; //renvoie -1 pour klac, 23 pour bonjour
+	std::string testdecale = decodeCesar(test, 3);
 
-
-    int index2 = Find_Index(phrase);
-    std::cout << index2 << std::endl;
+	std::cout << testdecale << std::endl;
+	std::cout << bestDecode(testdecale) << std::endl;
     return 0;
 }
+
+
+
+
 
 
 

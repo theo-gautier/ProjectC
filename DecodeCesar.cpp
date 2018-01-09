@@ -28,7 +28,6 @@ char decaleCesar(const char c, const int index){
      *  @return la valeur en lettre décalée de la lettre
      */
     
-    //Ajout d'un commentaire DE TESTTTT
     int ascii = charToAscii(c);
     
     if(maj(c)){ //Si le caractère est une majuscule.
@@ -50,18 +49,40 @@ char decaleCesar(const char c, const int index){
 
 std::string decodeCesar(const std::string message, const int index){
     std::string s = message;
-    for(int i = 0; i < message.size() ; i++){
+    for(unsigned int i = 0; i < message.size() ; i++){
         s[i] = decaleCesar(message[i], index);
     }
     return s;
 }
 
-std::vector<std::string> liste_decodee(const std::string message){
+std::vector<std::string> listeDecodee(const std::string message){
     std::vector<std::string> l(26);
     for (int j = 0; j < 26; j++){
         l[j] = decodeCesar(message, j);
     }
     return l;
+}
+
+const std::vector<std::string> parsing(const std::string message){
+//A partir d'un message, permet d'obtenir un vecteur qui comprend les mots du message
+	std::string mot;
+	std::vector<std::string> parsedList;
+
+	for(unsigned int i = 0; i < message.size(); i++){
+		if(message.compare(i,1," ")){ //Si la lettre n'est pas un espace...
+			mot+=message[i];
+			if(i == message.size() - 1){
+				parsedList.push_back(mot);
+				mot.clear();
+			}
+		}
+
+		else{
+			parsedList.push_back(mot);
+			mot.clear();
+		}
+	}
+	return parsedList;
 }
 
 void printVectorString(const std::vector<std::string> l){ 
