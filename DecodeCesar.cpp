@@ -13,7 +13,7 @@ char asciiToChar(const int value){
     return static_cast<int>(value);
 }
 
-//inutile dŽsormais on peut utiliser size
+//inutile desormais on peut utiliser size
 
 
 bool maj(const char c){
@@ -33,7 +33,7 @@ char decaleCesar(const char c, const int index){
     
     if(maj(c)){ //Si le caractère est une majuscule.
         ascii + index > 90 ? ascii+= index - 26 : ascii += index; //Condition ternaire en C.
-        //Si on dépasse 90, on revient en arrière de 26 pour écrire la bonne lettre.
+        //Si on depasse 90, on revient en arrière de 26 pour écrire la bonne lettre.
         
     }
     
