@@ -1,112 +1,82 @@
-//
-//  Donnees.cpp
-//  
-//
-//  Created by Luca Gorini on 24/12/2017.
-//
-//
 #pragma once
 #include <fstream>
 #include <string>
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
+#include <cmath>
+#include <algorithm>
 #include "DecodeCesar.hpp"
 #include "Donnees.hpp"
 
-bool rechercher_mot(const std::string Str){
+
+bool rechercher_mot(std::string Str, std::ifstream&  fich){
     // recherche un mot dans le dictionnaire et renvoie true si celui-ci y est
-    // recherche linéaire en la longueur du dictionnaire et O( longueur_max_mot * n ) où n est la longueur du dico
-    //On doit pouvoir optimiser le bordel. À moins de sacrifier fstream, impossible de copier tout le dico dans un vecteur sans faire au moins n opératoires (+ les sous jacentes à la copie) voir idées cypher
-    bool res = false;
-    std::ifstream fichier("frenchssaccent.dic");
-    // /!\ NE PAS SUPPRIMER /!\ "/Users/lucagorini/Documents/Electifs/ProjectC/frenchssaccent.dic"
-    //je suis passé sur un .txt mais je vais essayer avec le point dic
+	std::ifstream fichier("frenchssaccent.dic");
     if (fichier){ //si le fichier a été bien chargé
         std::string ligne;
         while(getline(fichier,ligne)){ //tant qu'il reste des lignes => saut de ligne dans le fichier (curseur dans le fichier)
             if (Str == ligne){
-                res = true;
+                return true;
             }
         }
     }
+
     else{
         std::cout << "Impossible d'ouvrir le fichier" << std::endl;
     }
-    return res;
-}
 
-std::vector<int> Find_Index_mot(const std::string mot){
-    //prend en entrée un mot et renvoie l'index de décodage qui permet de retrouver un mot du dictionnaire !
-    std::vector<std::string> l;
-    l = liste_decodee(mot);
-    std::vector<int> liste_index; //liste des décodages possibles pour un nombre
-    unsigned long len = l.size();
-    for (int i = 0 ; i < len ; i++){
-        if (rechercher_mot(l[i])){
-            liste_index.push_back(i);
-        }
-    }
-    return liste_index; //on suppose que cette liste n'est jamais vide et en plus elle est triée
-}
-
-//Implémentation de la recherche dichotomique la construction du vector fait de celui-ci est un vector trié !
-
-bool Recherche_elt(const std::vector<int> tab, const int entier){
-    int len = static_cast<int>(tab.size());  //MODIFICATION
-    //ça marche quand même sans le cast mais le if en dessous fait une conversion implicite je pense parce que le code marche même en déclarant len comme un unsigned long (tab.size() renvoie un unsigned long) qu'il compare avec un int.
-    int a = 0;
-    int b = len - 1;
-    int moitie = b/2;
-    int tmp = tab[moitie];
-    bool res = false;
-    if (entier == tab[0] | entier == tab[b]){ /*cas limites pas beau mais coûte quasi rien */
-        return true;
-    }
-    while (b - a != 1){
-        tmp = tab[moitie];
-        if (entier == tmp){
-            return true;
-        }
-        else if (entier > tmp){
-            a = moitie;
-            moitie = (a+b)/2;
-        }
-        else{
-            b = moitie;
-            moitie = (a+b)/2;
-        }
-    }
     return false;
 }
 
+int scoreLigne(std::vector<std::string> vector_phrase, std::ifstream& fich){
+	//Obtient le score d'une ligne.
+	unsigned int i;
+	unsigned int score = 0;
+	if(!fich.is_open()) return -1;
+	else{
+		for(i = 0; i < vector_phrase.size(); i++){
+			if(rechercher_mot(vector_phrase[i], fich)){
+				score++;}
+			fich.seekg(0, fich.beg);
+		}
 
-//Fonction de croisement de 2 vector d'entiers  /!\ TRÈS NAIVE /!\
-
-std::vector<int> Intersect_Vectors(const std::vector<int> vec1, const std::vector<int> vec2){
-    std::vector<int> intersect; //vecteur intersection
-//quelle taille est donné de base à intersect ?
-    unsigned long len1 = vec1.size(); //à caster
-    for (int i = 0 ; i < len1 ; i++){
-        int tmp = vec1[i];
-        if (Recherche_elt(vec2,tmp)){
-            intersect.push_back(tmp);
-        }
-    }
-    return intersect; //Si les phrases ne contiennent pas d'erreur, c'est non vide
+		return score;
+	}
 }
 
-int Find_Index(const std::vector<std::string> phrase){
-    //Prend un vector de string en entrée (après avoir éliminé les parenthèses ?) est ce le format de données le plus adapté ?
-    // renvoie un entier correspondant à l'index de décodage de la phrase (dans l'hypothèse où il n'existe qu'un seul décalage d'un mot qui soit dans le dico (ex: fin a pour décalage lot donc ça ne risque de pas marcher pour un tel mot) => on  ne veut plus de ça on tombe rapidement sur des bugs
-    //FORCE BRUTE
-    std::vector<int> index_tmp1 = Find_Index_mot(phrase[0]);
-    unsigned long len = phrase.size();
-    for (int i = 1; i < len ; i++){
-        std::vector<int> index_tmp2 = Find_Index_mot(phrase[i]);
-        index_tmp1 = Intersect_Vectors(index_tmp1, index_tmp2); //cela fonctionne -t-il
-    }
-    return index_tmp1[0]; //il ne doit rester qu'un seul entier dans l'intersection générale (très forte probabilité) dans l'hypothèse où on entre la phrase sans faute !
+
+std::vector<int> listScore(const std::vector<std::string> listPhrases){
+	//Utilise la liste decodee pour calculer le score de chaque ligne, et en fait une liste de score.
+	//(Premier element = pas de decalage).
+
+	std::ifstream fich("frenchssaccent.dic");
+	std::vector<int> l; //Liste score
+	unsigned int i;
+
+	for (i = 0; i < listPhrases.size(); i++){
+		l.push_back(scoreLigne(parsing(listPhrases[i]),fich));}
+	
+	fich.close();
+	return l;
 }
 
+const int maxInt(std::vector<int> scoreList){
+	std::vector<int>::iterator result;
+	result = std::max_element(scoreList.begin(), scoreList.end());
+	int pos = std::distance(scoreList.begin(),result);
+	return scoreList[pos];
+}
+
+const int maxPos(std::vector<int> scoreList){
+	std::vector<int>::iterator result;
+	result = std::max_element(scoreList.begin(), scoreList.end());
+	int pos = std::distance(scoreList.begin(),result);
+	return pos;
+}
+
+const std::string bestDecode(std::string phrase){
+	const std::vector<std::string> listPhrases = listeDecodee(phrase);
+	int bestPos = maxPos(listScore(listPhrases));
+	return listPhrases[bestPos];}
 

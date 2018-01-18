@@ -16,9 +16,8 @@ DecodeCesar.o: DecodeCesar.cpp
 Donnees.o: Donnees.cpp
 	$(CC) -o $@ -c $^ $(CFLAGS)
 
-cypher.o: cypher.cpp DecodeCesar.hpp Donnees.hpp
+cypher.o: cypher.cpp DecodeCesar.hpp Donnees.cpp
 	$(CC) -o $@ -c cypher.cpp $(CFLAGS)
-
 
 cleanfunctions:
 	rm -f *.o
