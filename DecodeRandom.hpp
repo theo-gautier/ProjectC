@@ -35,5 +35,5 @@ std::string toMinPhrase(std::string phrase);
 std::map<std::string, int> countCaracs(std::string phraseCodee);
 
 //Décodage final
-QString decodeRandom(QString phraseCodee, QString phraseClef);
+QString decodeRandom(QString phraseCodee, QString phraseClef, int mode);
 std::string bestDecodeRandom(std::string phraseCodee);

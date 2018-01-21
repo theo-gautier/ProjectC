@@ -32,8 +32,10 @@ std::vector<std::string> createRandomDecal(std::vector<std::string> listeStrings
 std::vector<std::string> createRandomDecal2(QString phraseClef){
     std::vector<std::string> listeStrings;
     int i;
+
     for(i = 0; i < phraseClef.size(); i++){
         QString carac = "" + phraseClef[i];
+
         listeStrings.push_back(carac.toStdString());
     }
     return listeStrings;
@@ -60,8 +62,11 @@ std::string wordToRandomWord(std::string word){
     //Transforme un mot en un mot random.
 
     std::string newWord;
-    std::vector<std::string> lMin = createListeStrings(0);
-    std::vector<std::string> lMaj = createListeStrings(1);
+    std::vector<std::string> lMin0 = createListeStrings(0);
+    std::vector<std::string> lMaj0 = createListeStrings(1);
+
+    std::vector<std::string> lMin = createRandomDecal(lMin0);
+    std::vector<std::string> lMaj = createRandomDecal(lMaj0);
 
     std::string carac;
     std::string carac2;
@@ -76,84 +81,83 @@ std::string wordToRandomWord(std::string word){
 
 std::string phraseToRandomPhrase(std::string phrase){
     std::string newPhrase;
-    std::vector<std::string> lMin = createListeStrings(0);
-    std::vector<std::string> lMaj = createListeStrings(1);
+    std::vector<std::string> lMin0 = createListeStrings(0);
+    std::vector<std::string> lMaj0 = createListeStrings(1);
+
+    std::vector<std::string> lMin = createRandomDecal(lMin0);
+    std::vector<std::string> lMaj = createRandomDecal(lMaj0);
 
     std::string carac;
-    std::string carac2;
 
     for (unsigned int i = 0; i < phrase.size(); i++){
-        if(!(phrase.compare(i,1," ") || phrase.compare(i,1,"'"))){ //message.compare(i,1," ")
-            carac2 = phrase[i];
-            carac = charToRandomChar(carac2, lMin, lMaj);
-            newPhrase += carac;}
-        else{
-            newPhrase+=phrase[i];
-        }
+        carac = phrase[i];
+        if(carac.compare(" ") != 0 && carac.compare("'") !=0){
+            carac = charToRandomChar(carac, lMin, lMaj);}
+        newPhrase += carac;
     }
     return newPhrase;
 }
 
 std::map<std::string, float> createDicoFreq(){
     std::map <std::string, float> dico;
-    dico["e"] = 12.10f;
-    dico["a"] = 7.11f;
-    dico["i"] = 6.59f;
-    dico["s"] = 6.51f;
-    dico["n"] = 6.39f;
-    dico["r"] = 6.07f;
-    dico["t"] = 5.92f;
-    dico["o"] = 5.02f;
-    dico["l"] = 4.96f;
-    dico["u"] = 4.49f;
-    dico["d"] = 3.67f;
-    dico["c"] = 3.18f;
-    dico["m"] = 2.62f;
-    dico["p"] = 2.49f;
-    dico["g"] = 1.23f;
-    dico["b"] = 1.14f;
-    dico["v"] = 1.11f;
-    dico["h"] = 1.11f;
-    dico["f"] = 1.11f;
-    dico["q"] = 0.65f;
-    dico["y"] = 0.46f;
-    dico["x"] = 0.38f;
-    dico["j"] = 0.34f;
-    dico["k"] = 0.29f;
-    dico["w"] = 0.17f;
-    dico["z"] = 0.15f;
+    dico["e"] = 17.26f;
+    dico["a"] = 8.40f;
+    dico["s"] = 8.08f;
+    dico["i"] = 7.34f;
+    dico["n"] = 7.13f;
+    dico["t"] = 7.07f;
+    dico["r"] = 6.55f;
+    dico["o"] = 5.26f;
+    dico["l"] = 6.01f;
+    dico["u"] = 5.74f;
+    dico["d"] = 4.18f;
+    dico["c"] = 3.03f;
+    dico["m"] = 2.96f;
+    dico["p"] = 3.01f;
+    dico["g"] = 1.27f;
+    dico["b"] = 1.06f;
+    dico["v"] = 1.32f;
+    dico["h"] = 0.92f;
+    dico["f"] = 1.12f;
+    dico["q"] = 0.99f;
+    dico["y"] = 0.30f;
+    dico["x"] = 0.45f;
+    dico["j"] = 0.31f;
+    dico["k"] = 0.05f;
+    dico["w"] = 0.04f;
+    dico["z"] = 0.12f;
     return dico;
 }
 
 
 std::map<float, std::string> createDicoReversed(){
     std::map <float, std::string> dico;
-    dico[12.14f] = "e";
-    dico[7.11f] = "a";
-    dico[6.59f] = "i";
-    dico[6.51f] = "s";
-    dico[6.39f] = "n";
-    dico[6.07f] = "r";
-    dico[5.92f] = "t";
-    dico[5.02f] = "o";
-    dico[4.96f] = "l";
-    dico[4.49f] = "u";
-    dico[3.67f] = "d";
-    dico[3.18f] = "c";
-    dico[2.62f] = "m";
-    dico[2.49f] = "p";
-    dico[1.23f] = "g";
-    dico[1.14f] = "b";
-    dico[1.11f] = "v";
-    dico[1.11f] = "h";
-    dico[1.11f] = "f";
-    dico[0.65f] = "q";
-    dico[0.46f] = "y";
-    dico[0.38f] = "x";
-    dico[0.34f] = "j";
-    dico[0.29f] = "k";
-    dico[0.17f] = "w";
-    dico[0.15f] = "z";
+    dico[17.26f] = "e";
+    dico[8.40f] = "a";
+    dico[8.08f] = "s";
+    dico[7.34f] = "i";
+    dico[7.13f] = "n";
+    dico[6.55f] = "r";
+    dico[7.07f] = "t";
+    dico[5.26f] = "o";
+    dico[6.01f] = "l";
+    dico[5.74f] = "u";
+    dico[4.18f] = "d";
+    dico[3.03f] = "c";
+    dico[2.96f] = "m";
+    dico[3.01f] = "p";
+    dico[1.27f] = "g";
+    dico[1.06f] = "b";
+    dico[1.32f] = "v";
+    dico[0.92f] = "h";
+    dico[1.12f] = "f";
+    dico[0.99f] = "q";
+    dico[0.30f] = "y";
+    dico[0.45f] = "x";
+    dico[0.31f] = "j";
+    dico[0.05f] = "k";
+    dico[0.04f] = "w";
+    dico[0.12f] = "z";
     return dico;
 }
 
@@ -191,25 +195,37 @@ std::map<std::string, int> countCaracs(std::string phraseCodee){
        d'obtenir les frequences des lettres codees dans la phrase */
     unsigned int i;
     std::map<std::string, int> dico;
-    std::string lettre = "";
+    std::string lettre;
     for(i = 0; i < phraseCodee.size(); i++){
-        lettre[0]= phraseCodee[i];
-        if(!lettre.compare(" ")){
-            dico[lettre] ++;
-        }
+        lettre = phraseCodee[i];
+        dico[lettre] +=1;
     }
     return dico;
 }
 
-QString decodeRandom(QString phraseCodee, QString phraseClef){
-    //Permet le décodage à partir d'une phraseClef.
-    std::vector<std::string> vecteurClef = createRandomDecal2(phraseClef);
+QString decodeRandom(QString phraseCodee, QString phraseClef, int mode){
+    //Permet le codage/décodage à partir d'une phraseClef.
+    //La fonction a deux modes, mode = 0 fait un codage, mode = 1 fait un decodage
+
     std::map<std::string, std::string> dico;
     std::vector<std::string> listeBasique = createListeStrings(0);
     QString phraseDecodee;
 
+    dico[" "] = " "; dico["'"] = "'";
+
     for(int i = 0; i < 26; i++){ //On remplit le dico avec les correspondances. {a->e...}
-        dico[listeBasique[i]] = vecteurClef[i];
+        QString carac0 = "" + phraseClef[i];
+        dico[carac0.toStdString()] = listeBasique[i];
+    }
+
+    if(mode == 1){
+
+        std::map<std::string, std::string> dico_reversed;
+
+        for (std::map<std::string, std::string>::iterator i = dico.begin(); i != dico.end(); i++)
+            dico_reversed[i->second] = i->first;
+        dico = dico_reversed;
+
     }
 
     for(int j = 0; j < phraseCodee.size(); j++){ //On créé la phrase décodée.
@@ -226,7 +242,6 @@ std::string bestDecodeRandom(std::string phraseCodee){
     //Décodage par BruteForce.
 
     unsigned int i;
-    std::map<std::string, float> dicoFrequences = createDicoFreq();
     std::map<float, std::string> reversedDicoFrequences = createDicoReversed();
     std::map<std::string, int> dicoCount = countCaracs(phraseCodee);
     std::map<float, std::string>::iterator lower_bIterator; //Frequence juste en dessous de la valeur que l'on obtient par la suite
@@ -235,30 +250,34 @@ std::string bestDecodeRandom(std::string phraseCodee){
 
 
     std::string carac;
-    std::string phraseFinale = phraseCodee;
+    std::string phraseFinale = "";
+
+
     float freq;
-    float lower_b; float upper_b;
-    float dist1; float dist2;
+    float upper_b;
+    int freqSpace = dicoCount[" "];
+    finalAssociations["'"] = "'";
+    finalAssociations[" "] = " ";
+    std::map<float, std::string>::iterator max;
+
 
     for(i = 0; i < phraseCodee.size(); i++){
         carac = phraseCodee[i];
-        freq = dicoCount[phraseCodee]/phraseCodee.size(); //La frequence d'apparition de la première lettre donnée.
-        lower_bIterator = reversedDicoFrequences.lower_bound(freq);
-        upper_bIterator = reversedDicoFrequences.upper_bound(freq);
-        lower_b = lower_bIterator -> first;
-        upper_b = upper_bIterator -> first;
 
-        dist1 = freq - lower_b;
-        dist2 = upper_b - freq;
-        if(dist1 < dist2){ //Si la frequence associee la plus proche est celle de lower_b, on remplace la lettre par celle donnee grace à lower_b.
-            finalAssociations[carac] = reversedDicoFrequences[lower_b];
-        }
-        else{
+
+        if(finalAssociations.count(carac) == 0){//si le caractère n'est pas encore dans la table.
+            freq = (float) 100.0 * dicoCount[carac]/(phraseCodee.size() - freqSpace); //La frequence d'apparition de la première lettre donnée.
+
+            upper_bIterator = reversedDicoFrequences.upper_bound(freq);
+            upper_b = upper_bIterator -> first;
+            max = std::max_element(reversedDicoFrequences.begin(), reversedDicoFrequences.end(), reversedDicoFrequences.value_comp());
+            if(freq > max-> first) upper_b = max -> first;
+
+
             finalAssociations[carac] = reversedDicoFrequences[upper_b];
+            reversedDicoFrequences.erase(upper_b);
         }
-        phraseFinale+=finalAssociations[carac][0];
-
+        phraseFinale += finalAssociations[carac];
     }
-
     return phraseFinale;
 }
