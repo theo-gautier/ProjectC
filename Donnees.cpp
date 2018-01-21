@@ -4,7 +4,7 @@
 bool rechercher_mot(std::string Str){
     // recherche un mot dans le dictionnaire et renvoie true si celui-ci y est
 
-    QFile fichier("frenchssaccent.dico");
+    QFile fichier("frenchssaccent.dic");
     fichier.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream in(&fichier);
 

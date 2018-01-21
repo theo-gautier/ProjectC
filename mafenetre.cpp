@@ -87,10 +87,11 @@ MaFenetre::MaFenetre() : QWidget()
 void MaFenetre::Retourne_MessageCrypte()
 {
     QString Phrase_A_Crypter = textEditW1-> toPlainText();
-    QString lineEditd1 -> text();
-    int index = (lineEditd1-> text()).toInt();
-    std::string Phrase_Decale0 = decodeCesar(Phrase_A_Crypter.toStdString(),index);
-    textEditR1 -> setText(QString::fromStdString(Phrase_Decale0));
+    QString indexText = lineEditd1 -> text();
+    if(indexText.size() < 3){
+        int index = (indexText).toInt();
+        std::string Phrase_Decale0 = decodeCesar(Phrase_A_Crypter.toStdString(),index);
+        textEditR1 -> setText(QString::fromStdString(Phrase_Decale0));}
 }
 
 void MaFenetre::Retourne_MessageDecrypte()
