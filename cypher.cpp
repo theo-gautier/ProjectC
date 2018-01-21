@@ -1,8 +1,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <stdlib.h>
 #include "DecodeCesar.hpp"
+#include "DecodeRandom.hpp"
 #include "Donnees.hpp"
 
 
@@ -12,12 +12,15 @@ int main()
     /*std::string str;
     std::cin >> str;*/
 
+    std::string phrase2 = "Je suis un cochon";
+    std::string testdecale = decodeCesar(phrase2, 3);
 
-    std::string test = "bonjour je suis un lot"; //renvoie -1 pour klac, 23 pour bonjour
-	std::string testdecale = decodeCesar(test, 3);
+    std::string phraseDecode = bestDecode(testdecale);
+    std::cout << phraseDecode << std::endl;
 
-	std::cout << testdecale << std::endl;
-	std::cout << bestDecode(testdecale) << std::endl;
+    std::vector<std::string> listeMaj = createListeStrings(1);
+    //printVectorString(listeMaj);
+
     return 0;
 }
 
@@ -27,12 +30,12 @@ int main()
 
 
 
-/* 
- Remarques: 
+/*
+ Remarques:
 - fstream gere mieux les string (chaine de caracteres de C++) que les char* (chaine de caracteres de C)
 - /!\ PROBLEME AVEC LES ACCENTS ENTRE NOS MACHINES /!\
- 
- 
+
+
  Ameliorations possibles (a partir de ce que Theo a deja commence a faire):
 
 3.gestion des langues a alphabet latin/ reconnaisance automatique de la langue a partir des dictionnaires => travail de recherche de dictionnaire (adaptation ?)
@@ -42,12 +45,12 @@ int main()
 7. Augmenter les possibilites de codage (Vigenere par exemple mais ca devient plus complique on peut deja complique Cesar cf 8. )
 8. Les vrais cryptogrammes suppriment les espaces, la ponctuation, les accents. Ils recollent tout et font des petits paquets de 3,4 ou 5. Pour Cesar, les paquets n'ont pas vraiment d'importance mais le fait de tout coller et de supprimer ponctutation etc ca deviendrait marrant :)
 
- 11. Probleme et grosse perte de TEMPS aussi, (j'ai pas eu le temps d'optimiser) à chaque appel de recherche_mot (ie de Find_Index_mot) on ouvre puis on ferme le .dic ce qui doit manger pas mal de temps en plus du fait que les fonctions de recher d'elt(intersect, entier dans un tableau trié qui plus est ne sont pas optimisés).
- 
+ 11. Probleme et grosse perte de TEMPS aussi, (j'ai pas eu le temps d'optimiser) ÀÜ chaque appel de recherche_mot (ie de Find_Index_mot) on ouvre puis on ferme le .dic ce qui doit manger pas mal de temps en plus du fait que les fonctions de recher d'elt(intersect, entier dans un tableau tri≈Ω qui plus est ne sont pas optimis≈Ωs).
+
  Solutions possibles:
  2. To do
  4. Regler les accents avant la conjugaison <3
  5. regle-t-on les accents ?
  6. Dichotomie ?
- 
+
  */

@@ -1,18 +1,10 @@
-#pragma once
-#include <fstream>
-#include <string>
-#include <vector>
-#include <iostream>
-#include <stdlib.h>
-#include <cmath>
-#include <algorithm>
-#include "DecodeCesar.hpp"
 #include "Donnees.hpp"
 
 
-bool rechercher_mot(std::string Str, std::ifstream&  fich){
+bool rechercher_mot(std::string Str){
     // recherche un mot dans le dictionnaire et renvoie true si celui-ci y est
-	std::ifstream fichier("frenchssaccent.dic");
+
+    std::ifstream fichier("liste.de.mots.francais.frgut.txt");
     if (fichier){ //si le fichier a été bien chargé
         std::string ligne;
         while(getline(fichier,ligne)){ //tant qu'il reste des lignes => saut de ligne dans le fichier (curseur dans le fichier)
@@ -29,20 +21,17 @@ bool rechercher_mot(std::string Str, std::ifstream&  fich){
     return false;
 }
 
-int scoreLigne(std::vector<std::string> vector_phrase, std::ifstream& fich){
+int scoreLigne(std::vector<std::string> vector_phrase){
 	//Obtient le score d'une ligne.
 	unsigned int i;
 	unsigned int score = 0;
-	if(!fich.is_open()) return -1;
-	else{
-		for(i = 0; i < vector_phrase.size(); i++){
-			if(rechercher_mot(vector_phrase[i], fich)){
-				score++;}
-			fich.seekg(0, fich.beg);
-		}
+    for(i = 0; i < vector_phrase.size(); i++){
+        if(rechercher_mot(vector_phrase[i])){
+            score++;}
+        //fich.seekg(0, fich.beg); TODO : A implémenter
+    }
 
-		return score;
-	}
+    return score;
 }
 
 
@@ -50,14 +39,12 @@ std::vector<int> listScore(const std::vector<std::string> listPhrases){
 	//Utilise la liste decodee pour calculer le score de chaque ligne, et en fait une liste de score.
 	//(Premier element = pas de decalage).
 
-	std::ifstream fich("frenchssaccent.dic");
 	std::vector<int> l; //Liste score
 	unsigned int i;
 
 	for (i = 0; i < listPhrases.size(); i++){
-		l.push_back(scoreLigne(parsing(listPhrases[i]),fich));}
-	
-	fich.close();
+		l.push_back(scoreLigne(parsing(listPhrases[i])));}
+
 	return l;
 }
 

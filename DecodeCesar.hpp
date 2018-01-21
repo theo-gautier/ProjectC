@@ -1,3 +1,11 @@
+#pragma once
+#include <iostream>
+#include <vector>
+#include <string>
+#include <stdlib.h>
+
+
+
 std::string decodeCesar(const std::string str_in);
 int charToAscii(const char c);
 char decaleCesar(const char c, const int index);
