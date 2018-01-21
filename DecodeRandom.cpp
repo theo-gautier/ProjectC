@@ -29,18 +29,6 @@ std::vector<std::string> createRandomDecal(std::vector<std::string> listeStrings
     return listeStrings;
 }
 
-std::vector<std::string> createRandomDecal2(QString phraseClef){
-    std::vector<std::string> listeStrings;
-    int i;
-
-    for(i = 0; i < phraseClef.size(); i++){
-        QString carac = "" + phraseClef[i];
-
-        listeStrings.push_back(carac.toStdString());
-    }
-    return listeStrings;
-}
-
 std::string charToRandomChar(std::string carac,
                          std::vector<std::string> decalageRandomMin,
                          std::vector<std::string> decalageRandomMaj){
@@ -91,7 +79,7 @@ std::string phraseToRandomPhrase(std::string phrase){
 
     for (unsigned int i = 0; i < phrase.size(); i++){
         carac = phrase[i];
-        if(carac.compare(" ") != 0 && carac.compare("'") !=0){
+        if(carac.compare(" ") != 0 && carac.compare("'") !=0 && carac.compare("?") !=0 && carac.compare("!") !=0 && carac.compare(",") !=0 && carac.compare(".") !=0){
             carac = charToRandomChar(carac, lMin, lMaj);}
         newPhrase += carac;
     }
@@ -178,7 +166,7 @@ std::string toMinPhrase(std::string phrase){
     std::string carac2;
 
     for(unsigned int i = 0; i < phrase.size(); i++){
-        if(!(phrase.compare(i,1," ") || phrase.compare(i,1,"'"))){ //message.compare(i,1," ")
+        if(!(phrase.compare(i,1," ") || phrase.compare(i,1,"'") || phrase.compare(i,1,"?") || phrase.compare(i,1,"!")|| phrase.compare(i,1,",")|| phrase.compare(i,1,"."))){ //message.compare(i,1," ")
             carac2 = phrase[i];
             carac = toMin(carac2);
             phraseMin += carac;
@@ -211,8 +199,7 @@ QString decodeRandom(QString phraseCodee, QString phraseClef, int mode){
     std::vector<std::string> listeBasique = createListeStrings(0);
     QString phraseDecodee;
 
-    dico[" "] = " "; dico["'"] = "'";
-
+    dico[" "] = " "; dico["'"] = "'"; dico["?"] = "?"; dico["!"] = "!"; dico[","] = ","; dico["."] = ".";
     for(int i = 0; i < 26; i++){ //On remplit le dico avec les correspondances. {a->e...}
         QString carac0 = "" + phraseClef[i];
         dico[carac0.toStdString()] = listeBasique[i];
@@ -258,6 +245,11 @@ std::string bestDecodeRandom(std::string phraseCodee){
     int freqSpace = dicoCount[" "];
     finalAssociations["'"] = "'";
     finalAssociations[" "] = " ";
+    finalAssociations["?"] = "?";
+    finalAssociations["!"] = "!";
+    finalAssociations["."] = ".";
+    finalAssociations[","] = ",";
+
     std::map<float, std::string>::iterator max;
 
 

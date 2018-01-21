@@ -14,7 +14,6 @@
 //Création de décalages/vecteurs
 std::vector<std::string> createListeStrings(int maj);
 std::vector<std::string> createRandomDecal(std::vector<std::string> listeStrings);
-std::vector<std::string> createRandomDecal2(QString phraseClef);
 
 //toRandom diverses
 std::string charToRandom(std::string carac,

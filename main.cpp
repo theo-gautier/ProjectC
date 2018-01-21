@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[])
 {
-    std::string phrase0 = "easiratin est une personne que j'apprecie fortement";
+    std::string phrase0 = "easiratin est. une personne que j'apprecie fortement !";
 
     QString phraseClef = QString::fromStdString(phraseToRandomPhrase("abcdefghijklmnopqrstuvwxyz"));
 
