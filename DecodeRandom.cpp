@@ -84,34 +84,35 @@ std::string phraseToRandomPhrase(std::string phrase){
     return newPhrase;
 }
 
-std::map createDico(){
+std::map<std::string, float> createDico(){
     std::map <std::string, float> dico;
-    dico["e"] = 12,10;
-    dico["a"] = 7,11;
-    dico["i"] = 6,59;
-    dico["s"] = 6,51;
-    dico["n"] = 6,39;
-    dico["r"] = 6,07;
-    dico["t"] = 5,92;
-    dico["o"] = 5,02;
-    dico["l"] = 4,96;
-    dico["u"] = 4,49;
-    dico["d"] = 3,67;
-    dico["c"] = 3,18;
-    dico["m"] = 2,62;
-    dico["p"] = 2,49;
-    dico["g"] = 1,23;
-    dico["b"] = 1,14;
-    dico["v"] = 1,11;
-    dico["h"] = 1,11;
-    dico["f"] = 1,11;
-    dico["q"] = 0,65;
-    dico["y"] = 0,46;
-    dico["x"] = 0,38;
-    dico["j"] = 0,34;
-    dico["k"] = 0,29;
-    dico["w"] = 0,17;
-    dico["z"] = 0,15;
+    dico["e"] = 12.10f;
+    dico["a"] = 7.11f;
+    dico["i"] = 6.59f;
+    dico["s"] = 6.51f;
+    dico["n"] = 6.39f;
+    dico["r"] = 6.07f;
+    dico["t"] = 5.92f;
+    dico["o"] = 5.02f;
+    dico["l"] = 4.96f;
+    dico["u"] = 4.49f;
+    dico["d"] = 3.67f;
+    dico["c"] = 3.18f;
+    dico["m"] = 2.62f;
+    dico["p"] = 2.49f;
+    dico["g"] = 1.23f;
+    dico["b"] = 1.14f;
+    dico["v"] = 1.11f;
+    dico["h"] = 1.11f;
+    dico["f"] = 1.11f;
+    dico["q"] = 0.65f;
+    dico["y"] = 0.46f;
+    dico["x"] = 0.38f;
+    dico["j"] = 0.34f;
+    dico["k"] = 0.29f;
+    dico["w"] = 0.17f;
+    dico["z"] = 0.15f;
+    return dico;
 }
 
 
@@ -119,8 +120,9 @@ std::string toMin(std::string carac){
     //Transforme un caractere en caractere minuscule
     int value;
 
-    value = charToAscii(carac);
-    return asciiToChar(value + 22);
+    value = charToAscii(carac[0]);
+    std::string result = "";
+    return result + asciiToChar(value + 22);
 }
 
 std::string toMinPhrase(std::string phrase){

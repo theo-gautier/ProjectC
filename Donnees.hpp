@@ -6,6 +6,10 @@
 #include <stdlib.h>
 #include <cmath>
 #include <algorithm>
+#include <QFile>
+#include <QTextStream>
+#include <QString>
+#include <QIODevice>
 #include "DecodeCesar.hpp"
 
 

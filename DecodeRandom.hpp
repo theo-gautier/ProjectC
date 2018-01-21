@@ -18,4 +18,5 @@ std::string charToRandom(std::string carac,
                          std::vector<std::string> decalageRandomMaj);
 std::string wordToRandomWord(std::string word);
 std::string phraseToRandomPhrase(std::string phrase);
+std::map<std::string, float> createDico();
 

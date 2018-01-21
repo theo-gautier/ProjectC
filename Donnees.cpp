@@ -1,17 +1,25 @@
 #include "Donnees.hpp"
-
+#include <QFileInfo>
 
 bool rechercher_mot(std::string Str){
     // recherche un mot dans le dictionnaire et renvoie true si celui-ci y est
 
-    std::ifstream fichier("liste.de.mots.francais.frgut.txt");
-    if (fichier){ //si le fichier a été bien chargé
+    QFile fichier("frenchssaccent.dico");
+    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream in(&fichier);
+
+    if (fichier.exists()){ //si le fichier a été bien chargé
+
         std::string ligne;
-        while(getline(fichier,ligne)){ //tant qu'il reste des lignes => saut de ligne dans le fichier (curseur dans le fichier)
-            if (Str == ligne){
+        while(!in.atEnd()){
+            QString ligne = in.readLine();
+            std::string line = ligne.toStdString();
+
+            if (Str == ligne.toStdString()){
                 return true;
             }
         }
+        fichier.close();
     }
 
     else{
